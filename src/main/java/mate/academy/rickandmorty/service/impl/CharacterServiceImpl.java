@@ -3,7 +3,6 @@ package mate.academy.rickandmorty.service.impl;
 import java.util.List;
 import java.util.Random;
 import lombok.RequiredArgsConstructor;
-import mate.academy.rickandmorty.dto.CharacterDto;
 import mate.academy.rickandmorty.dto.ResponseDto;
 import mate.academy.rickandmorty.exception.EntityNotFoundException;
 import mate.academy.rickandmorty.mapper.CharacterMapper;
@@ -29,8 +28,8 @@ public class CharacterServiceImpl implements CharacterService {
     }
 
     @Override
-    public CharacterDto getRandomCharacter() {
-        return mapper.toDto(repository.findById(random.nextLong(countCharactersInDb()))
+    public ResponseDto getRandomCharacter() {
+        return mapper.toResponseDto(repository.findById(random.nextLong(countCharactersInDb()))
                 .orElseThrow(() -> new EntityNotFoundException(
                         "Failed to get random Character from DB")));
     }

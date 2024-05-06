@@ -8,8 +8,8 @@ import jakarta.persistence.Table;
 import lombok.Data;
 
 @Entity
-@Data
 @Table(name = "characters")
+@Data
 public class Character {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

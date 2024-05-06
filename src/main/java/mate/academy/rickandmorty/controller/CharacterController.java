@@ -2,12 +2,10 @@ package mate.academy.rickandmorty.controller;
 
 import java.util.List;
 import lombok.RequiredArgsConstructor;
-import mate.academy.rickandmorty.dto.CharacterDto;
 import mate.academy.rickandmorty.dto.ResponseDto;
 import mate.academy.rickandmorty.service.CharacterService;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -24,7 +22,7 @@ public class CharacterController {
     }
 
     @GetMapping("/random")
-    public CharacterDto getRandomCharacter(@PathVariable Long id) {
+    public ResponseDto getRandomCharacter() {
         return service.getRandomCharacter();
     }
 }
