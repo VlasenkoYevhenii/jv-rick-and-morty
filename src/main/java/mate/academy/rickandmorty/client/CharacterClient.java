@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
 import java.net.URI;
+import java.net.URL;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
@@ -24,22 +25,27 @@ public class CharacterClient {
     @Qualifier("characterMapperImpl")
     private final CharacterMapper mapper;
 
-    public List<Character> getAll() throws IOException, InterruptedException {
-        HttpClient client = HttpClient.newHttpClient();
-        HttpRequest request = HttpRequest.newBuilder()
-                .GET()
-                .uri(URI.create(URL))
-                .build();
-
+    public List<Character> getAll() throws IOException {
+        HttpClient httpClient = HttpClient.newHttpClient();
         ObjectMapper objectMapper = new ObjectMapper();
-        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        JsonNode resultsNode;
+        try {
+            HttpRequest request = HttpRequest.newBuilder()
+                    .GET()
+                    .uri(URI.create(URL))
+                    .build();
+            HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+            JsonNode rootNode = objectMapper.readTree(response.body());
+            resultsNode = rootNode.get("results");
+        } catch (IOException | InterruptedException e) {
+            throw new IOException("Failed to fetch characters from external API", e);
+        }
 
-        JsonNode rootNode = objectMapper.readTree(response.body());
-        JsonNode resultsNode = rootNode.get("results");
-
-        List<ExternalCharacterDto> externalCharacters = objectMapper.convertValue(resultsNode,
+        List<ExternalCharacterDto> externalCharacters = objectMapper.readValue(
+                resultsNode.traverse(),
                 new TypeReference<>() {
-                });
+                }
+        );
 
         return externalCharacters.stream()
                 .map(mapper::toEntity)
