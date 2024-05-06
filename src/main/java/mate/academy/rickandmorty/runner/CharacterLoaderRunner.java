@@ -18,7 +18,6 @@ public class CharacterLoaderRunner {
     public ApplicationRunner loadCharactersAtStartUp() {
         return args -> {
             try {
-                System.out.println("Loading characters from external API");
                 repository.saveAll(client.getAll());
             } catch (Exception e) {
                 throw new LoadExternalDataException(
