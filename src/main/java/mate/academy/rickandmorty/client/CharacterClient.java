@@ -34,7 +34,8 @@ public class CharacterClient {
                     .GET()
                     .uri(URI.create(URL))
                     .build();
-            HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+            HttpResponse<String> response = httpClient.send(request,
+                    HttpResponse.BodyHandlers.ofString());
             JsonNode rootNode = objectMapper.readTree(response.body());
             resultsNode = rootNode.get("results");
         } catch (IOException | InterruptedException e) {
