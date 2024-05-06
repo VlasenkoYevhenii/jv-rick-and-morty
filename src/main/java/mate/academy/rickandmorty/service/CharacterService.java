@@ -1,12 +1,12 @@
 package mate.academy.rickandmorty.service;
 
-import mate.academy.rickandmorty.dto.CharacterDto;
-import mate.academy.rickandmorty.model.Character;
-
 import java.util.List;
+import mate.academy.rickandmorty.dto.CharacterDto;
+import mate.academy.rickandmorty.dto.ResponseDto;
+import org.springframework.data.domain.Pageable;
 
 public interface CharacterService {
-    List<CharacterDto> getCharactersByName(String name);
+    List<ResponseDto> getCharactersByName(String name, Pageable pageable);
 
     CharacterDto getRandomCharacter();
 }

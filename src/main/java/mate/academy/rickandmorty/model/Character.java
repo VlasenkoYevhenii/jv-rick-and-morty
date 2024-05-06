@@ -18,4 +18,7 @@ public class Character {
     private String name;
     private String status;
     private String gender;
+
+    public Character() {
+    }
 }
